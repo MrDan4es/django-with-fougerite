@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.5.2.0.b1.min.css' %}">
+        <title>RUST server</title>
+    </head>
+    <body class="h-100">
+        {% if server.is_on %}
+        
+            <div class="row bg-success h-100 w-100 justify-content-center align-items-center h1 g-0" id="main_div">
+                SERVER ONLINE!
+            </div>
+
+        {% else %}
+
+            <div class="row bg-danger h-100 w-100 justify-content-center align-items-center h1 g-0" id="main_div">
+                SERVER OFFLINE
+            </div>
+        
+        {% endif %}
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.5.2.0.b1.bundle.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>
