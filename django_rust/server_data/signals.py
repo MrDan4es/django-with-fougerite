@@ -1,5 +1,5 @@
 from django.dispatch import receiver    
-from django.db.models.signals import post_save,post_delete
+from django.db.models.signals import post_save
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 

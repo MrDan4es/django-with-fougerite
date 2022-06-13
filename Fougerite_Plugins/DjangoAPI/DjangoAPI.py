@@ -5,7 +5,7 @@ __version__ = '0.0.1'
 
 import clr
 clr.AddReferenceByPartialName("Fougerite")
-clr.AddReferenceByPartialName('System.Core')
+clr.AddReferenceByPartialName("System.Core")
 
 from datetime import datetime
 import json
@@ -23,7 +23,8 @@ class DjangoAPI:
         Fougerite.Logger.Log(response)
 
     def login_callback(self, response_code, response):
-        Fougerite.Logger.Log('!!!!!!!' + str(response_code))
+        steam_ID = int(response[1:-1])
+        # Fougerite.Logger.Log(str(DataStore.Get('DjangoAPI', steam_ID)))
 
     def send_data_API(self, url, method, content):
         Web.CreateAsyncHTTPRequest(
@@ -35,37 +36,37 @@ class DjangoAPI:
         )
 
     def player_connected_API(self, player):
-        Web.CreateAsyncHTTPRequest(
-            SERVER_API_URL + '/api/players/',
-            Action[int, str](self.web_callback),
-            method='POST',
-            inputBody=json.dumps(
-                {
-                    "steam_ID": player.SteamID,
-                    "nickname": player.Name,
-                    "on_server": True
-                }
-            ),
-            contentType="application/json",
-        )
-        Web.CreateAsyncHTTPRequest(
-            SERVER_API_URL + '/api/players/' + player.SteamID + '/',
-            Action[int, str](self.web_callback),
-            method='PUT',
-            inputBody=json.dumps(
-                {
-                    "steam_ID": player.SteamID,
-                    "nickname": player.Name,
-                    "on_server": True
-                }
-            ),
-            contentType="application/json",
-        )
+        # Web.CreateAsyncHTTPRequest(
+        #     SERVER_API_URL + '/api/players/',
+        #     Action[int, str](self.web_callback),
+        #     method='POST',
+        #     inputBody=json.dumps(
+        #         {
+        #             "steam_ID": player.SteamID,
+        #             "nickname": player.Name,
+        #             "on_server": True
+        #         }
+        #     ),
+        #     contentType="application/json",
+        # )
         # Web.CreateAsyncHTTPRequest(
         #     SERVER_API_URL + '/api/players/' + player.SteamID + '/',
-        #     Action[int, str](self.login_callback),
-        #     method='GET'
+        #     Action[int, str](self.web_callback),
+        #     method='PUT',
+        #     inputBody=json.dumps(
+        #         {
+        #             "steam_ID": player.SteamID,
+        #             "nickname": player.Name,
+        #             "on_server": True
+        #         }
+        #     ),
+        #     contentType="application/json",
         # )
+        Web.CreateAsyncHTTPRequest(
+            SERVER_API_URL + '/api/players/' + player.SteamID + '/',
+            Action[int, str](self.login_callback),
+            method='GET'
+        )
 
     def On_PlayerConnected(self, Player):
         self.player_connected_API(Player)
