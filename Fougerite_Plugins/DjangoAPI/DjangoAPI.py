@@ -14,7 +14,7 @@ from System import Action
 import Fougerite
 
 
-server_API_url = 'http://127.0.0.1:8000/'
+SERVER_API_URL = 'http://127.0.0.1:8000/'
 
 
 class DjangoAPI:
@@ -27,7 +27,7 @@ class DjangoAPI:
 
     def send_data_API(self, url, method, content):
         Web.CreateAsyncHTTPRequest(
-            self.server_API_url + url,
+            SERVER_API_URL + url,
             Action[int, str](self.web_callback),
             method=method,
             inputBody=json.dumps(content),
@@ -36,7 +36,7 @@ class DjangoAPI:
 
     def player_connected_API(self, player):
         Web.CreateAsyncHTTPRequest(
-            self.server_API_url + '/api/players/',
+            SERVER_API_URL + '/api/players/',
             Action[int, str](self.web_callback),
             method='POST',
             inputBody=json.dumps(
@@ -49,7 +49,7 @@ class DjangoAPI:
             contentType="application/json",
         )
         Web.CreateAsyncHTTPRequest(
-            self.server_API_url + '/api/players/' + player.SteamID + '/',
+            SERVER_API_URL + '/api/players/' + player.SteamID + '/',
             Action[int, str](self.web_callback),
             method='PUT',
             inputBody=json.dumps(
@@ -62,7 +62,7 @@ class DjangoAPI:
             contentType="application/json",
         )
         # Web.CreateAsyncHTTPRequest(
-        #     self.server_API_url + '/api/players/' + player.SteamID + '/',
+        #     SERVER_API_URL + '/api/players/' + player.SteamID + '/',
         #     Action[int, str](self.login_callback),
         #     method='GET'
         # )
