@@ -23,7 +23,7 @@ $(document).ready(function() {
         console.log(data)
         switch (data.command) {
             case 'server':
-                if (data['online'] === true) {
+                if (data.online === true) {
                     $('#main_div').removeClass()
                     $('#main_div').text('SERVER ONLINE!')
                     $('#main_div').addClass('row bg-success w-100 justify-content-center align-items-center h1 g-0')

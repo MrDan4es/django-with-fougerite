@@ -6,6 +6,7 @@ from asgiref.sync import async_to_sync
 from server_data.models import ChatMessage, Server, Player
 
 
+MAX_MESSAGES = 100
 channel_layer = get_channel_layer()
 
 @receiver(post_save, sender=Server)
@@ -33,6 +34,10 @@ def player_signal(sender, instance, created, *args, **kwargs):
 
 @receiver(post_save, sender=ChatMessage)
 def chat_signal(sender, instance, created, *args, **kwargs):
+    if ChatMessage.objects.count() > MAX_MESSAGES:
+        ids = ChatMessage.objects.order_by("-pk").values_list("pk", flat=True)[:MAX_MESSAGES]
+        ChatMessage.objects.exclude(pk__in=list(ids)).delete()
+        
     async_to_sync(channel_layer.group_send)(
     'main',
         {
