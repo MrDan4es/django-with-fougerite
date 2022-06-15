@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from rest_framework.routers import SimpleRouter
 
-from server_data.views import PlayerViewSet, ServerViewSet
+from server_data.views import ChatMessageViewSet, PlayerViewSet, ServerViewSet
 from .views import index_page
 from .consumers import MainConsumer
 
@@ -11,6 +11,7 @@ from .consumers import MainConsumer
 router = SimpleRouter()
 router.register(r'server', ServerViewSet, basename='server')
 router.register(r'players', PlayerViewSet, basename='players')
+router.register(r'messages', ChatMessageViewSet, basename='messages')
 
 urlpatterns = [
     path('', index_page, name='index'),

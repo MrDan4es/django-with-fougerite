@@ -2,13 +2,18 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import Http404
 
-from server_data.serializers import ServerSerializer, PlayerSerializer
-from server_data.models import Server, Player
+from server_data.serializers import ChatMessageSerializer, ServerSerializer, PlayerSerializer
+from server_data.models import ChatMessage, Server, Player
 
     
 class ServerViewSet(viewsets.ModelViewSet):
     serializer_class = ServerSerializer
     queryset = Server.objects.all()
+
+
+class ChatMessageViewSet(viewsets.ModelViewSet):
+    serializer_class = ChatMessageSerializer
+    queryset = ChatMessage.objects.all()
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
