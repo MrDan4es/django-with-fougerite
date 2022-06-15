@@ -41,7 +41,7 @@ $(document).ready(function() {
                 dateString = date.getHours() + ":" + String(date.getMinutes()).padStart(2, "0")
                     $('#chat').append(`
             <div class="col-12 p-0">
-                <div class="border animate__animated animate__fadeIn" style="width: fit-content; max-width: 80%; min-height: 60px; border-radius: 0.25rem; background-color: var(--bs-gray-100);">
+                <div class="border" style="min-height: 60px; border-radius: 0.25rem; background-color: var(--bs-gray-100);">
                     <div class="row justify-content-between">
                         <font class="w-auto mx-1 text-decoration-none 'text-success'" data-username="${data.nickname}"><i>${data.nickname}</i></font>
                         <div class="w-auto mx-1" style="color: var(--bs-gray-600)">${dateString}</div>

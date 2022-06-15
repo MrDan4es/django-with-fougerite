@@ -9,6 +9,10 @@
         <title>RUST server</title>
     </head>
     <body class="h-100">
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.5.2.0.b1.bundle.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
         {% if server.is_on %}
         
             <div class="row bg-success w-100 justify-content-center align-items-center h1 g-0" id="main_div">
@@ -22,16 +26,35 @@
             </div>
         
         {% endif %}
-        <div class="col-md-7 col-lg-5 col-xl-4 container text-center h-100">
-            <div id="scrollarea" class="container border mt-3 overflow-auto" style="height: calc(100% - 200px); border-radius: 0.25rem;">
+
+        <div class="col-md-7 col-lg-5 col-xl-4 container text-center" style="height: calc(100% - 100px);">
+            <div id="scrollarea" class="container border mt-3 overflow-auto h-100" style="border-radius: 0.25rem;">
                 <div id="chat" class="row row-cols-1 gy-2 p-3 text-start">
-                    
+                    {% for message in messages %}
+
+                        <script type="text/javascript">
+                            var date = new Date("{{ message.create_date|date:"c" }}")
+                            dateString = date.getHours() + ":" + String(date.getMinutes()).padStart(2, "0")
+                            $('#chat').append(`
+                    <div class="col-12 p-0">
+                        <div class="border" style="min-height: 60px; border-radius: 0.25rem; background-color: var(--bs-gray-100);">
+                            <div class="row justify-content-between">
+                                <font class="w-auto mx-1 text-decoration-none 'text-success'" data-username="{{ message.player.nickname }}"><i>{{ message.player.nickname }}</i></font>
+                                <div class="w-auto mx-1" style="color: var(--bs-gray-600)">${dateString}</div>
+                            </div>
+                            <div class="mx-1 text-break" style="white-space: pre-wrap;">{{message.text}}</div>
+                        </div>
+                    </div>`)
+                        </script>
+
+                    {% endfor %}
+
+                    <script type="text/javascript">
+                        var objDiv = document.getElementById("scrollarea")
+                        objDiv.scrollTop = objDiv.scrollHeight
+                    </script>
                 </div>
             </div>
         </div>
-        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
-        <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.5.2.0.b1.bundle.min.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
